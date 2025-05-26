@@ -6,4 +6,5 @@ import com.estatebasic.dto.BuildingDTO;
 
 public interface BuildingService {
 	List<BuildingDTO> searchBuildings(String name, Long districtId);
+	BuildingDTO findBuildingById(Long id);
 }

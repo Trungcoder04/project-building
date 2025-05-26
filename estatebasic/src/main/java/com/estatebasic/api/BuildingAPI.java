@@ -20,4 +20,11 @@ public class BuildingAPI {
                                             @RequestParam(required = false) Long districtId) {
         return buildingService.searchBuildings(name, districtId);
     }
+    
+ // Lấy chi tiết 1 tòa nhà theo ID
+    @GetMapping("/{id}")
+    public BuildingDTO getBuildingById(@PathVariable Long id) {
+        return buildingService.findBuildingById(id);
+    }
+
 }

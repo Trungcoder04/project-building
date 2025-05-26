@@ -56,4 +56,48 @@ public class BuildingServiceImpl implements BuildingService {
         }
         return results;
     }
+    @Override
+    public BuildingDTO findBuildingById(Long id) {
+        BuildingEntity entity = buildingRepository.findById(id).orElse(null);
+        if (entity == null) {
+            return null;
+        }
+
+        BuildingDTO dto = new BuildingDTO();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setStreet(entity.getStreet());
+        dto.setWard(entity.getWard());
+        dto.setDistrictId(entity.getDistrictId());
+        dto.setStructure(entity.getStructure());
+        dto.setNumberOfBasement(entity.getNumberOfBasement());
+        dto.setFloorArea(entity.getFloorArea());
+        dto.setDirection(entity.getDirection());
+        dto.setLevel(entity.getLevel());
+        dto.setRentPrice(entity.getRentPrice());
+        dto.setRentPriceDescription(entity.getRentPriceDescription());
+        dto.setServiceFee(entity.getServiceFee());
+        dto.setCarFee(entity.getCarFee());
+        dto.setMotorbikeFee(entity.getMotorbikeFee());
+        dto.setOvertimeFee(entity.getOvertimeFee());
+        dto.setWaterFee(entity.getWaterFee());
+        dto.setElectricityFee(entity.getElectricityFee());
+        dto.setDeposit(entity.getDeposit());
+        dto.setPayment(entity.getPayment());
+        dto.setRentTime(entity.getRentTime());
+        dto.setDecorationTime(entity.getDecorationTime());
+        dto.setBrokerageFee(entity.getBrokerageFee());
+        dto.setNote(entity.getNote());
+        dto.setManagerName(entity.getManagerName());
+        dto.setManagerPhoneNumber(entity.getManagerPhoneNumber());
+
+        if (entity.getDistrictId() != null) {
+            DistrictEntity district = districtRepository.findById(entity.getDistrictId()).orElse(null);
+            if (district != null) {
+                dto.setDistrictName(district.getName());
+            }
+        }
+        return dto;
+    }
+
 }
