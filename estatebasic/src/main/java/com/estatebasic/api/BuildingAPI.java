@@ -26,5 +26,11 @@ public class BuildingAPI {
     public BuildingDTO getBuildingById(@PathVariable Long id) {
         return buildingService.findBuildingById(id);
     }
+    
+ // Thêm mới 1 Tòa nhà
+    @PostMapping
+    public BuildingDTO createBuilding(@RequestBody BuildingDTO buildingDTO) {
+        return buildingService.saveBuilding(buildingDTO);
+    }
 
 }

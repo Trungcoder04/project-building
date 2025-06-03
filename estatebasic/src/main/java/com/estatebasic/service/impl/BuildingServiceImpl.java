@@ -100,4 +100,41 @@ public class BuildingServiceImpl implements BuildingService {
         return dto;
     }
 
+    @Override
+    public BuildingDTO saveBuilding(BuildingDTO buildingDTO) {
+        BuildingEntity entity = new BuildingEntity();
+        entity.setName(buildingDTO.getName());
+        entity.setStreet(buildingDTO.getStreet());
+        entity.setWard(buildingDTO.getWard());
+        entity.setDistrictId(buildingDTO.getDistrictId());
+        entity.setStructure(buildingDTO.getStructure());
+        entity.setNumberOfBasement(buildingDTO.getNumberOfBasement());
+        entity.setFloorArea(buildingDTO.getFloorArea());
+        entity.setDirection(buildingDTO.getDirection());
+        entity.setLevel(buildingDTO.getLevel());
+        entity.setRentPrice(buildingDTO.getRentPrice());
+        entity.setRentPriceDescription(buildingDTO.getRentPriceDescription());
+        entity.setServiceFee(buildingDTO.getServiceFee());
+        entity.setCarFee(buildingDTO.getCarFee());
+        entity.setMotorbikeFee(buildingDTO.getMotorbikeFee());
+        entity.setOvertimeFee(buildingDTO.getOvertimeFee());
+        entity.setWaterFee(buildingDTO.getWaterFee());
+        entity.setElectricityFee(buildingDTO.getElectricityFee());
+        entity.setDeposit(buildingDTO.getDeposit());
+        entity.setPayment(buildingDTO.getPayment());
+        entity.setRentTime(buildingDTO.getRentTime());
+        entity.setDecorationTime(buildingDTO.getDecorationTime());
+        entity.setBrokerageFee(buildingDTO.getBrokerageFee());
+        entity.setNote(buildingDTO.getNote());
+        entity.setManagerName(buildingDTO.getManagerName());
+        entity.setManagerPhoneNumber(buildingDTO.getManagerPhoneNumber());
+
+        // Lưu vào MySQL Database
+        BuildingEntity savedEntity = buildingRepository.save(entity);
+
+        // Gán ID mới sinh trả về cho DTO
+        buildingDTO.setId(savedEntity.getId());
+        return buildingDTO;
+    }
+
 }
