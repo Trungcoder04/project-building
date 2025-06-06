@@ -8,4 +8,6 @@ public interface BuildingService {
 	List<BuildingDTO> searchBuildings(String name, Long districtId);
 	BuildingDTO findBuildingById(Long id);
 	BuildingDTO saveBuilding(BuildingDTO buildingDTO);
+	BuildingDTO updateBuilding(Long id, BuildingDTO buildingDTO);
+	void deleteBuilding(Long id);
 }

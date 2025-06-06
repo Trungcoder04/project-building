@@ -137,4 +137,47 @@ public class BuildingServiceImpl implements BuildingService {
         return buildingDTO;
     }
 
+    @Override
+    public BuildingDTO updateBuilding(Long id, BuildingDTO buildingDTO) {
+        BuildingEntity entity = buildingRepository.findById(id).orElse(null);
+        if (entity == null) {
+            return null;
+        }
+
+        entity.setName(buildingDTO.getName());
+        entity.setStreet(buildingDTO.getStreet());
+        entity.setWard(buildingDTO.getWard());
+        entity.setDistrictId(buildingDTO.getDistrictId());
+        entity.setStructure(buildingDTO.getStructure());
+        entity.setNumberOfBasement(buildingDTO.getNumberOfBasement());
+        entity.setFloorArea(buildingDTO.getFloorArea());
+        entity.setDirection(buildingDTO.getDirection());
+        entity.setLevel(buildingDTO.getLevel());
+        entity.setRentPrice(buildingDTO.getRentPrice());
+        entity.setRentPriceDescription(buildingDTO.getRentPriceDescription());
+        entity.setServiceFee(buildingDTO.getServiceFee());
+        entity.setCarFee(buildingDTO.getCarFee());
+        entity.setMotorbikeFee(buildingDTO.getMotorbikeFee());
+        entity.setOvertimeFee(buildingDTO.getOvertimeFee());
+        entity.setWaterFee(buildingDTO.getWaterFee());
+        entity.setElectricityFee(buildingDTO.getElectricityFee());
+        entity.setDeposit(buildingDTO.getDeposit());
+        entity.setPayment(buildingDTO.getPayment());
+        entity.setRentTime(buildingDTO.getRentTime());
+        entity.setDecorationTime(buildingDTO.getDecorationTime());
+        entity.setBrokerageFee(buildingDTO.getBrokerageFee());
+        entity.setNote(buildingDTO.getNote());
+        entity.setManagerName(buildingDTO.getManagerName());
+        entity.setManagerPhoneNumber(buildingDTO.getManagerPhoneNumber());
+
+        BuildingEntity updatedEntity = buildingRepository.save(entity);
+        buildingDTO.setId(updatedEntity.getId());
+        return buildingDTO;
+    }
+
+    @Override
+    public void deleteBuilding(Long id) {
+        buildingRepository.deleteById(id);
+    }
+
 }

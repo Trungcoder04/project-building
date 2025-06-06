@@ -33,4 +33,16 @@ public class BuildingAPI {
         return buildingService.saveBuilding(buildingDTO);
     }
 
+ // Cập nhật thông tin 1 Tòa nhà theo ID
+    @PutMapping("/{id}")
+    public BuildingDTO updateBuilding(@PathVariable Long id, @RequestBody BuildingDTO buildingDTO) {
+        return buildingService.updateBuilding(id, buildingDTO);
+    }
+
+    // Xóa 1 Tòa nhà theo ID
+    @DeleteMapping("/{id}")
+    public void deleteBuilding(@PathVariable Long id) {
+        buildingService.deleteBuilding(id);
+    }
+
 }
