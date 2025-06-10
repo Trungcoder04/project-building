@@ -10,4 +10,5 @@ public interface BuildingService {
 	BuildingDTO saveBuilding(BuildingDTO buildingDTO);
 	BuildingDTO updateBuilding(Long id, BuildingDTO buildingDTO);
 	void deleteBuilding(Long id);
+	void assignStaff(Long buildingId, List<Long> staffIds);
 }

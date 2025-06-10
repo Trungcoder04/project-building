@@ -180,4 +180,24 @@ public class BuildingServiceImpl implements BuildingService {
         buildingRepository.deleteById(id);
     }
 
+    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void assignStaff(Long buildingId, List<Long> staffIds) {
+        // 1. Xóa tất cả các phân công cũ của tòa nhà này
+        assignmentBuildingRepository.deleteByBuildingId(buildingId);
+
+        // 2. Thêm mới các phân công nhân viên được chọn
+        if (staffIds != null && !staffIds.isEmpty()) {
+            for (Long staffId : staffIds) {
+                AssignmentBuildingEntity entity = new AssignmentBuildingEntity();
+                entity.setBuildingId(buildingId);
+                entity.setStaffId(staffId);
+                assignmentBuildingRepository.save(entity);
+            }
+        }
+    }
+
 }

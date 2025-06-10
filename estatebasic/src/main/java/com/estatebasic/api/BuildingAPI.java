@@ -44,5 +44,12 @@ public class BuildingAPI {
     public void deleteBuilding(@PathVariable Long id) {
         buildingService.deleteBuilding(id);
     }
+    
+ // Phân công Nhân viên quản lý Tòa nhà
+    @PostMapping("/{id}/assignment")
+    public void assignStaff(@PathVariable Long id, @RequestBody AssignmentBuildingDTO dto) {
+        buildingService.assignStaff(id, dto.getStaffIds());
+    }
+
 
 }
