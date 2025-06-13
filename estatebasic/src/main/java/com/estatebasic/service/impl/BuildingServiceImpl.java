@@ -1,16 +1,19 @@
 package com.estatebasic.service.impl;
 
-import com.estatebasic.dto.BuildingDTO;
-import com.estatebasic.entity.BuildingEntity;
-import com.estatebasic.entity.DistrictEntity;
-import com.estatebasic.repository.BuildingRepository;
-import com.estatebasic.repository.DistrictRepository;
-import com.estatebasic.service.BuildingService;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.estatebasic.dto.BuildingDTO;
+import com.estatebasic.entity.AssignmentBuildingEntity;
+import com.estatebasic.entity.BuildingEntity;
+import com.estatebasic.entity.DistrictEntity;
+import com.estatebasic.repository.AssignmentBuildingRepository;
+import com.estatebasic.repository.BuildingRepository;
+import com.estatebasic.repository.DistrictRepository;
+import com.estatebasic.service.BuildingService;
 
 @Service
 public class BuildingServiceImpl implements BuildingService {
@@ -186,10 +189,8 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     @org.springframework.transaction.annotation.Transactional
     public void assignStaff(Long buildingId, List<Long> staffIds) {
-        // 1. Xóa tất cả các phân công cũ của tòa nhà này
         assignmentBuildingRepository.deleteByBuildingId(buildingId);
 
-        // 2. Thêm mới các phân công nhân viên được chọn
         if (staffIds != null && !staffIds.isEmpty()) {
             for (Long staffId : staffIds) {
                 AssignmentBuildingEntity entity = new AssignmentBuildingEntity();
