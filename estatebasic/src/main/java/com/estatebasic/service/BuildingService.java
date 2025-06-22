@@ -1,5 +1,9 @@
 package com.estatebasic.service;
 
-public interface BuildingService {
+import java.util.List;
 
+import com.estatebasic.dto.BuildingDTO;
+
+public interface BuildingService {
+	List<BuildingDTO> searchBuildings(String name, Long districtId);
 }
