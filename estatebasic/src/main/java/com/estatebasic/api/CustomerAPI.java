@@ -44,4 +44,10 @@ public class CustomerAPI {
     public void deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
     }
+ // Phân công Nhân viên chăm sóc Khách hàng
+    @PostMapping("/{id}/assignment")
+    public void assignStaff(@PathVariable Long id, @RequestBody AssignmentCustomerDTO dto) {
+        customerService.assignStaff(id, dto.getStaffIds());
+    }
+
 }

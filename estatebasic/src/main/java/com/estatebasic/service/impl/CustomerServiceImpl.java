@@ -1,14 +1,17 @@
 package com.estatebasic.service.impl;
 
-import com.estatebasic.dto.CustomerDTO;
-import com.estatebasic.entity.CustomerEntity;
-import com.estatebasic.repository.CustomerRepository;
-import com.estatebasic.service.CustomerService;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.estatebasic.dto.CustomerDTO;
+import com.estatebasic.entity.AssignmentCustomerEntity;
+import com.estatebasic.entity.CustomerEntity;
+import com.estatebasic.repository.AssignmentCustomerRepository;
+import com.estatebasic.repository.CustomerRepository;
+import com.estatebasic.service.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -74,4 +77,23 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
     }
+    
+    @Autowired
+    private AssignmentCustomerRepository assignmentCustomerRepository;
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void assignStaff(Long customerId, List<Long> staffIds) {
+        assignmentCustomerRepository.deleteByCustomerId(customerId);
+
+        if (staffIds != null && !staffIds.isEmpty()) {
+            for (Long staffId : staffIds) {
+                AssignmentCustomerEntity entity = new AssignmentCustomerEntity();
+                entity.setCustomerId(customerId);
+                entity.setStaffId(staffId);
+                assignmentCustomerRepository.save(entity);
+            }
+        }
+    }
+
 }
