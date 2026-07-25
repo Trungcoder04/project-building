@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EstateBasic Management System</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom Style System & Admin Dashboard CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- 1. ADMIN SIDEBAR -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <a href="admin.html" class="sidebar-brand text-decoration-none">
+                <i class="fa-solid fa-city"></i>
+                <span>EstateBasic</span>
+            </a>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="menu-category">Menu Chính</li>
+            
+            <li class="nav-item-admin">
+                <a href="#" class="nav-link-admin active" data-tab="tab-overview">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Tổng Quan (Dashboard)</span>
+                </a>
+            </li>
+
+            <li class="nav-item-admin">
+                <a href="#" class="nav-link-admin" data-tab="tab-buildings">
+                    <i class="fa-solid fa-building"></i>
+                    <span>Quản Lý Tòa Nhà</span>
+                </a>
+            </li>
+
+            <li class="nav-item-admin">
+                <a href="#" class="nav-link-admin" data-tab="tab-customers">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Quản Lý Khách Hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item-admin">
+                <a href="#" class="nav-link-admin" data-tab="tab-transactions">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <span>Lịch Sử Giao Dịch</span>
+                </a>
+            </li>
+
+            <li class="menu-category manager-only">Hệ Thống (Manager Only)</li>
+
+            <li class="nav-item-admin manager-only">
+                <a href="#" class="nav-link-admin" data-tab="tab-users">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Quản Lý Tài Khoản</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-user-info">
+            <div class="user-avatar" id="adminUserAvatar">U</div>
+            <div class="user-details flex-grow-1">
+                <div class="user-name" id="adminUserName">Người Dùng</div>
+                <span class="user-role-badge role-staff" id="adminUserRoleBadge">STAFF</span>
+            </div>
+            <button class="btn btn-sm btn-outline-light border-0" onclick="Auth.logout()" title="Đăng xuất">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN CONTENT WRAPPER -->
+    <div class="admin-main-wrapper">
+        <!-- TOPBAR -->
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="toggle-sidebar-btn" id="toggleSidebar">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h4 class="page-title" id="adminPageTitle">Tổng Quan Hệ Thống</h4>
+            </div>
+
+            <div class="topbar-right">
+                <!-- Demo Quick Role Switcher -->
+                <div class="d-flex align-items-center gap-2">
+                    <span class="small text-muted fw-semibold d-none d-sm-inline">Giả lập Role test CV:</span>
+                    <select class="role-switcher-select" id="quickRoleSwitcher">
+                        <option value="manager">MANAGER (Nguyễn Văn Quản Lý)</option>
+                        <option value="staff1">STAFF (Trần Thị Thu Hà)</option>
+                        <option value="staff2">STAFF (Lê Minh Tuấn)</option>
+                    </select>
+                </div>
+
+                <a href="index.html" target="_blank" class="btn btn-sm btn-outline-primary fw-semibold rounded-pill px-3">
+                    <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Xem Trang Public
+                </a>
+            </div>
+        </header>
+
+        <!-- ADMIN CONTENT PANELS -->
+        <main class="admin-content">
+
+            <!-- TAB 1: OVERVIEW -->
+            <section class="admin-tab-pane active" id="tab-overview">
+                <div class="row g-4 mb-4">
+                    <div class="col-xl-4 col-md-6">
+                        <div class="stat-card">
+                            <div>
+                                <div class="stat-number" id="statTotalBuildings">0</div>
+                                <div class="stat-label">Tổng Số Tòa Nhà System</div>
+                            </div>
+                            <div class="stat-icon icon-blue">
+                                <i class="fa-solid fa-building"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6">
+                        <div class="stat-card">
+                            <div>
+                                <div class="stat-number" id="statTotalCustomers">0</div>
+                                <div class="stat-label">Khách Hàng Đã Đăng Ký</div>
+                            </div>
+                            <div class="stat-icon icon-green">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-12">
+                        <div class="stat-card">
+                            <div>
+                                <div class="stat-number" id="statTotalTransactions">0</div>
+                                <div class="stat-label">Tổng Giao Dịch Phát Sinh</div>
+                            </div>
+                            <div class="stat-icon icon-purple">
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Feed -->
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5 class="fw-bold mb-0"><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>Hoạt Động & Giao Dịch Mới Nhất</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Loại Giao Dịch</th>
+                                    <th>Khách Hàng</th>
+                                    <th>Nội Dung Ghi Chú</th>
+                                    <th>Thời Gian</th>
+                                    <th>Nhân Viên</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentTransactionsTbody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: BUILDING MANAGEMENT -->
+            <section class="admin-tab-pane" id="tab-buildings">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5 class="fw-bold mb-0">Danh Sách Tòa Nhà</h5>
+                        <button class="btn btn-primary-custom" onclick="openBuildingModal()">
+                            <i class="fa-solid fa-plus me-1"></i> Thêm Tòa Nhà Mới
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-custom mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Tên Tòa Nhà</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Kết Cấu</th>
+                                    <th>Giá Thuê</th>
+                                    <th>Diện Tích Trống</th>
+                                    <th>NV Quản Lý</th>
+                                    <th class="text-end">Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="buildingsTbody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: CUSTOMER MANAGEMENT -->
+            <section class="admin-tab-pane" id="tab-customers">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5 class="fw-bold mb-0">Quản Lý Danh Sách Khách Hàng</h5>
+                        <button class="btn btn-primary-custom" onclick="openCustomerModal()">
+                            <i class="fa-solid fa-user-plus me-1"></i> Thêm Khách Hàng Mới
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-custom mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Tên Khách Hàng</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Email</th>
+                                    <th>NV Chăm Sóc</th>
+                                    <th class="text-end">Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTbody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: TRANSACTION HISTORY -->
+            <section class="admin-tab-pane" id="tab-transactions">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <div class="d-flex align-items-center gap-3 flex-grow-1">
+                            <h5 class="fw-bold mb-0 me-3">Lịch Sử Giao Dịch</h5>
+                            <select id="txCustomerSelect" class="form-select form-control-custom w-auto">
+                                <option value="">-- Tất cả Khách Hàng --</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary-custom" onclick="openAddTransactionModal()">
+                            <i class="fa-solid fa-plus me-1"></i> Tạo Giao Dịch Mới
+                        </button>
+                    </div>
+
+                    <div class="p-4" id="transactionsTimeline">
+                        <!-- Populated dynamically by admin.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: USER MANAGEMENT (MANAGER ONLY) -->
+            <section class="admin-tab-pane manager-only" id="tab-users">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5 class="fw-bold mb-0">Danh Sách Người Dùng & Nhân Viên (Quản lý Quyền)</h5>
+                        <button class="btn btn-primary-custom" onclick="openUserModal()">
+                            <i class="fa-solid fa-user-plus me-1"></i> Tạo Tài Khoản Mới
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-custom mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Họ Và Tên</th>
+                                    <th>SĐT</th>
+                                    <th>Vai Trò (Role)</th>
+                                    <th>Trạng Thái</th>
+                                    <th class="text-end">Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTbody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ==========================================================================
+         MODALS CONTAINER
+         ========================================================================== -->
+
+    <!-- 1. ADD / EDIT BUILDING MODAL -->
+    <div class="modal fade" id="buildingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="buildingModalTitle">Thêm Tòa Nhà</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="buildingForm" onsubmit="saveBuilding(event)">
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="buildingFormId">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Tên Tòa Nhà *</label>
+                                <input type="text" id="bName" class="form-control form-control-custom" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label-custom">Khu Vực (Quận) *</label>
+                                <select id="bDistrictId" class="form-select form-control-custom" required></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label-custom">Hạng Tòa Nhà</label>
+                                <input type="text" id="bLevel" class="form-control form-control-custom" placeholder="Ví dụ: Hạng A+">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Tên Đường</label>
+                                <input type="text" id="bStreet" class="form-control form-control-custom" placeholder="720A Điện Biên Phủ">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Phường / Xã</label>
+                                <input type="text" id="bWard" class="form-control form-control-custom" placeholder="Phường 22">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Kết Cấu Tòa Nhà</label>
+                                <input type="text" id="bStructure" class="form-control form-control-custom" placeholder="81 tầng, 3 hầm">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Số Tầng Hầm</label>
+                                <input type="number" id="bBasements" class="form-control form-control-custom" value="1">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Diện Tích Sàn (m²)</label>
+                                <input type="number" id="bFloorArea" class="form-control form-control-custom" placeholder="1000">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Hướng Tòa Nhà</label>
+                                <input type="text" id="bDirection" class="form-control form-control-custom" placeholder="Đông Nam">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Giá Thuê (USD/m²) *</label>
+                                <input type="number" id="bRentPrice" class="form-control form-control-custom" step="0.1" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Mô Tả Giá Thuê</label>
+                                <input type="text" id="bRentPriceDesc" class="form-control form-control-custom" placeholder="Chưa VAT & PQL">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label-custom">Diện Tích Thuê Trống (Nhập phân cách bằng dấu phẩy)</label>
+                                <input type="text" id="bRentAreasInput" class="form-control form-control-custom" placeholder="100, 200, 500">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label-custom mb-2">Loại Hình Thuê (Chọn nhiều)</label>
+                                <div id="bRentTypesContainer" class="p-3 bg-light rounded border"></div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Phí Dịch Vụ</label>
+                                <input type="text" id="bServiceFee" class="form-control form-control-custom" placeholder="6.5 USD/m²">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Phí Ô Tô</label>
+                                <input type="text" id="bCarFee" class="form-control form-control-custom" placeholder="2.500.000 VNĐ/tháng">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Phí Xe Máy</label>
+                                <input type="text" id="bMotorbikeFee" class="form-control form-control-custom" placeholder="250.000 VNĐ/tháng">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Phí Ngoài Giờ</label>
+                                <input type="text" id="bOvertimeFee" class="form-control form-control-custom">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Tiền Điện</label>
+                                <input type="text" id="bElectricityFee" class="form-control form-control-custom">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Tiền Nước</label>
+                                <input type="text" id="bWaterFee" class="form-control form-control-custom">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Đặt Cọc</label>
+                                <input type="text" id="bDeposit" class="form-control form-control-custom" placeholder="3 tháng">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Thanh Toán</label>
+                                <input type="text" id="bPayment" class="form-control form-control-custom" placeholder="3 tháng/lần">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Thời Hạn Thuê</label>
+                                <input type="text" id="bRentTime" class="form-control form-control-custom" placeholder="3 năm">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Thời Gian Trang Trí</label>
+                                <input type="text" id="bDecorationTime" class="form-control form-control-custom" placeholder="30 ngày">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Phí Môi Giới</label>
+                                <input type="text" id="bBrokerageFee" class="form-control form-control-custom" placeholder="1 tháng tiền thuê">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Tên Quản Lý Tòa Nhà</label>
+                                <input type="text" id="bManagerName" class="form-control form-control-custom">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">SĐT Quản Lý Tòa Nhà</label>
+                                <input type="text" id="bManagerPhone" class="form-control form-control-custom">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label-custom">Ghi Chú Chi Tiết</label>
+                                <textarea id="bNote" class="form-control form-control-custom" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary-custom">Lưu Thông Tin Tòa Nhà</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. ASSIGN STAFF TO BUILDING MODAL -->
+    <div class="modal fade" id="assignBuildingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Phân Công Nhân Viên Quản Lý Tòa Nhà</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="assignBuildingId">
+                    <p class="mb-3">Tòa nhà: <strong id="assignBuildingName" class="text-primary fs-6"></strong></p>
+                    <label class="form-label-custom mb-2">Chọn các Nhân viên (STAFF) phụ trách:</label>
+                    <div id="staffBuildingCheckboxes" class="p-3 bg-light rounded border"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="saveAssignBuilding()">Lưu Phân Công</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. ADD / EDIT CUSTOMER MODAL -->
+    <div class="modal fade" id="customerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="customerModalTitle">Khách Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="customerForm" onsubmit="saveCustomer(event)">
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="customerFormId">
+                        <div class="mb-3">
+                            <label class="form-label-custom">Họ và Tên Khách Hàng / Tên Cty *</label>
+                            <input type="text" id="cFullname" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Số Điện Thoại *</label>
+                            <input type="tel" id="cPhone" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Email Liên Hệ</label>
+                            <input type="email" id="cEmail" class="form-control form-control-custom">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary-custom">Lưu Khách Hàng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. ASSIGN STAFF TO CUSTOMER MODAL -->
+    <div class="modal fade" id="assignCustomerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Phân Công Nhân Viên Chăm Sóc Khách Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="assignCustomerId">
+                    <p class="mb-3">Khách hàng: <strong id="assignCustomerName" class="text-primary fs-6"></strong></p>
+                    <label class="form-label-custom mb-2">Chọn các Nhân viên (STAFF) phụ trách:</label>
+                    <div id="staffCustomerCheckboxes" class="p-3 bg-light rounded border"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="saveAssignCustomer()">Lưu Phân Công</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. ADD TRANSACTION MODAL -->
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Tạo Mới Giao Dịch Khách Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="transactionForm" onsubmit="saveTransaction(event)">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label-custom">Chọn Khách Hàng *</label>
+                            <select id="txFormCustomerId" class="form-select form-control-custom" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Loại Giao Dịch *</label>
+                            <select id="txFormType" class="form-select form-control-custom" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Nội Dung Ghi Chú Chi Tiết *</label>
+                            <textarea id="txFormNote" class="form-control form-control-custom" rows="3" required placeholder="Nhập chi tiết tư vấn, dẫn đi xem, thỏa thuận cọc..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary-custom">Lưu Giao Dịch</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. ADD / EDIT USER MODAL (MANAGER ONLY) -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="userModalTitle">Tạo Tài Khoản Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="userForm" onsubmit="saveUser(event)">
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="userFormId">
+                        <div class="mb-3">
+                            <label class="form-label-custom">Tên Đăng Nhập (Username) *</label>
+                            <input type="text" id="uUsername" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Mật Khẩu</label>
+                            <input type="password" id="uPassword" class="form-control form-control-custom" placeholder="Mặc định: 123">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Họ và Tên *</label>
+                            <input type="text" id="uFullname" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Số Điện Thoại</label>
+                            <input type="tel" id="uPhone" class="form-control form-control-custom">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Email</label>
+                            <input type="email" id="uEmail" class="form-control form-control-custom">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom mb-2">Phân Quyền (Role):</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="uRoleManager" value="MANAGER">
+                                    <label class="form-check-label fw-semibold" for="uRoleManager">MANAGER (Quản Lý)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="uRoleStaff" value="STAFF" checked>
+                                    <label class="form-check-label fw-semibold" for="uRoleStaff">STAFF (Nhân Viên)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary-custom">Lưu Tài Khoản</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/mockData.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/admin.js"></script>
+
+    <script>
+        // Toggle mobile drawer sidebar
+        document.getElementById('toggleSidebar')?.addEventListener('click', () => {
+            document.getElementById('adminSidebar')?.classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

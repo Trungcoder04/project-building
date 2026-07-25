@@ -1,0 +1,13 @@
+{
+  "name": "estatebasic-frontend",
+  "version": "1.0.0",
+  "description": "EstateBasic Real Estate Frontend System",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o /index.html",
+    "dev": "npx http-server . -p 3000 -o /index.html"
+  },
+  "keywords": ["real-estate", "estatebasic", "frontend", "spring-boot-api"],
+  "author": "",
+  "license": "ISC"
+}

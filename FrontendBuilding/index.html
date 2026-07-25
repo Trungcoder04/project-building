@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstateBasic - Hệ Thống Cho Thuê Bất Động Sản Văn Phòng Tiêu Chuẩn</title>
+    <meta name="description" content="Tìm kiếm văn phòng cho thuê, tòa nhà thương mại cao cấp tại TP.HCM. Cập nhật diện tích trống, giá thuê, kết cấu và phí dịch vụ chính xác nhất.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom Style System -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- 1. PUBLIC HEADER / NAVBAR -->
+    <header class="public-header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg py-3">
+                <a class="navbar-brand-custom" href="index.html">
+                    <i class="fa-solid fa-city"></i>
+                    <span>EstateBasic</span>
+                    <span class="brand-badge">PRO</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-menu ms-auto d-flex align-items-center gap-2 list-unstyled mb-0 me-4">
+                        <li><a href="index.html" class="nav-link-custom active">Trang Chủ</a></li>
+                        <li><a href="#searchSection" class="nav-link-custom">Tìm Kiếm Tòa Nhà</a></li>
+                        <li><a href="#featuredSection" class="nav-link-custom">Tòa Nhà Nổi Bật</a></li>
+                        <li><a href="#contactSection" class="nav-link-custom">Liên Hệ</a></li>
+                    </ul>
+
+                    <div class="header-actions">
+                        <a href="login.html" class="btn btn-primary-custom rounded-pill">
+                            <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập System
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2. HERO & SEO SEARCH FILTER SECTION -->
+    <section class="hero-section" id="searchSection">
+        <div class="container">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-8">
+                    <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill mb-3">
+                        <i class="fa-solid fa-bolt me-1"></i> Hệ Thống Quản Lý Bất Động Sản Chuyên Nghiệp
+                    </span>
+                    <h1 class="hero-title">Tìm Kiếm Văn Phòng & Tòa Nhà Cho Thuê Nhanh Chóng</h1>
+                    <p class="hero-subtitle">Tra cứu hàng ngàn tòa nhà thương mại, văn phòng trọn gói, diện tích linh hoạt tại các quận trung tâm với giá thuê minh bạch.</p>
+                </div>
+            </div>
+
+            <!-- SEO Search Filter Card -->
+            <div class="filter-card">
+                <div class="filter-card-header">
+                    <div class="filter-title">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>Bộ Lọc Tìm Kiếm Bất Động Sản</span>
+                    </div>
+                    <span class="text-muted small" id="resultCount">Đang tải dữ liệu...</span>
+                </div>
+
+                <form id="buildingFilterForm">
+                    <div class="row g-3">
+                        <!-- Keyword / Building Name -->
+                        <div class="col-lg-4 col-md-6">
+                            <label class="form-label-custom"><i class="fa-solid fa-magnifying-glass me-1"></i> Tên tòa nhà / Đường</label>
+                            <input type="text" id="filterName" class="form-control form-control-custom" placeholder="Nhập tên tòa nhà hoặc vị trí...">
+                        </div>
+
+                        <!-- District Select -->
+                        <div class="col-lg-4 col-md-6">
+                            <label class="form-label-custom"><i class="fa-solid fa-map-location-dot me-1"></i> Khu Vực (Quận)</label>
+                            <select id="filterDistrict" class="form-select form-control-custom">
+                                <option value="">-- Tất cả các Quận --</option>
+                            </select>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="col-lg-4 col-md-6">
+                            <label class="form-label-custom"><i class="fa-solid fa-dollar-sign me-1"></i> Giá thuê từ - đến (USD/m²)</label>
+                            <div class="input-group">
+                                <input type="number" id="filterPriceFrom" class="form-control form-control-custom" placeholder="Từ (ví dụ: 15)">
+                                <span class="input-group-text bg-light">-</span>
+                                <input type="number" id="filterPriceTo" class="form-control form-control-custom" placeholder="Đến (ví dụ: 50)">
+                            </div>
+                        </div>
+
+                        <!-- Rent Area Range -->
+                        <div class="col-lg-4 col-md-6">
+                            <label class="form-label-custom"><i class="fa-solid fa-vector-square me-1"></i> Diện tích thuê từ - đến (m²)</label>
+                            <div class="input-group">
+                                <input type="number" id="filterAreaFrom" class="form-control form-control-custom" placeholder="Từ (100 m²)">
+                                <span class="input-group-text bg-light">-</span>
+                                <input type="number" id="filterAreaTo" class="form-control form-control-custom" placeholder="Đến (500 m²)">
+                            </div>
+                        </div>
+
+                        <!-- Rent Types Checkboxes Grid -->
+                        <div class="col-lg-8 col-md-12">
+                            <label class="form-label-custom mb-2"><i class="fa-solid fa-building me-1"></i> Loại hình thuê</label>
+                            <div class="rent-type-grid" id="filterRentTypesContainer">
+                                <!-- Checkboxes populated dynamically via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Submit & Reset Buttons -->
+                        <div class="col-12 text-end pt-2">
+                            <button type="button" id="btnResetFilter" class="btn btn-secondary-custom me-2">
+                                <i class="fa-solid fa-rotate-left me-1"></i> Đặt Lại
+                            </button>
+                            <button type="submit" class="btn btn-primary-custom px-4">
+                                <i class="fa-solid fa-magnifying-glass me-1"></i> Tìm Kiếm Tòa Nhà
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. BUILDING LIST (GRID VIEW) -->
+    <main class="container my-5" id="featuredSection">
+        <div class="section-title-wrap text-center">
+            <span class="section-tag">DANH SÁCH TÒA NHÀ CHO THUÊ</span>
+            <h2 class="fw-bold">Văn Phòng Nổi Bật Dành Cho Doanh Nghiệp</h2>
+            <p class="text-muted">Cập nhật danh sách diện tích trống mới nhất trực tiếp từ Ban Quản Lý tòa nhà.</p>
+        </div>
+
+        <!-- Dynamic Grid View -->
+        <div class="row" id="buildingsGrid">
+            <!-- Rendered dynamically by public.js -->
+        </div>
+    </main>
+
+    <!-- 4. BUILDING DETAIL MODAL -->
+    <div class="modal fade" id="buildingDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header border-0 p-3">
+                    <h5 class="modal-title fw-bold" id="detailModalTitle">Chi Tiết Tòa Nhà</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" id="detailModalBody">
+                    <!-- Populated dynamically by public.js -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. FOOTER -->
+    <footer class="public-footer" id="contactSection">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="navbar-brand-custom text-white mb-3">
+                        <i class="fa-solid fa-city text-primary"></i>
+                        <span>EstateBasic</span>
+                    </div>
+                    <p class="text-white-50">Nền tảng kết nối thông tin cho thuê văn phòng và tòa nhà thương mại uy tín hàng đầu. Giải pháp quản lý tòa nhà và khách hàng chuẩn Restful API Java Spring Boot.</p>
+                    <div class="d-flex gap-3 fs-5 mt-3 text-white-50">
+                        <a href="#" class="text-white-50"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="text-white-50"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#" class="text-white-50"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title">Liên Kết Nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Trang Chủ</a></li>
+                        <li><a href="#searchSection">Tìm Tòa Nhà</a></li>
+                        <li><a href="login.html">Đăng Nhập Quản Trị</a></li>
+                        <li><a href="#">Điều Khoản Dịch Vụ</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Thông Tin Liên Hệ</h5>
+                    <ul class="footer-links">
+                        <li><i class="fa-solid fa-location-dot me-2 text-primary"></i> Tòa nhà Landmark 81, TP.HCM</li>
+                        <li><i class="fa-solid fa-phone me-2 text-primary"></i> Hotline: 0901 234 567</li>
+                        <li><i class="fa-solid fa-envelope me-2 text-primary"></i> Email: support@estatebasic.com</li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Bản Đồ Trụ Sở</h5>
+                    <div class="rounded-3 overflow-hidden bg-secondary p-3 text-center text-white-50">
+                        <i class="fa-solid fa-map-marked-alt display-4 text-primary mb-2"></i>
+                        <p class="small mb-0">Bản đồ vệ tinh trung tâm thương mại TP.HCM</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright-bar">
+                <p class="mb-0">&copy; 2026 EstateBasic Real Estate System. Built with HTML5, CSS3, ES6 & Integration Ready for Spring Boot REST API.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/mockData.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/public.js"></script>
+</body>
+</html>
